@@ -15,7 +15,21 @@ This is a basic FastAPI application configured to run both locally and inside a 
 
 ## 🏗️ Project Structure
 
-fast-api/ │ ├── app/ │ └── main.py # Main FastAPI application │ ├── venv/ # Local virtual environment (optional) ├── .env # Environment variables (not committed) ├── .env.template # Sample environment file ├── .gitignore # Git ignore rules ├── .dockerignore # Docker ignore rules ├── Dockerfile # Docker build config ├── docker-compose.yml # Docker Compose config └── requirements.txt # Python dependencies
+## 🏗️ Project Structure
+
+```text
+fast-api/
+├── app/
+│   └── main.py               # Main FastAPI application
+├── venv/                     # Local virtual environment (optional)
+├── .env                      # Environment variables (not committed)
+├── .env.template             # Sample environment file
+├── .gitignore                # Git ignore rules
+├── .dockerignore             # Docker ignore rules
+├── Dockerfile                # Docker build config
+├── docker-compose.yml        # Docker Compose config
+└── requirements.txt          # Python dependencies
+```
 
 ## 🚀 Getting Started
 
