@@ -29,6 +29,36 @@ fast-api/
 └── requirements.txt          # Python dependencies
 ```
 
+## 🪛 Install Ollama
+> This project uses [Ollama](https://ollama.com/) locally to run LLMs such as llama3:7b. You do not need a GPU to run the model, but performance may vary on CPU.
+
+1. Download and install Ollama from the official website 👉 https://ollama.com/download
+2. Once installed, open a terminal and verify:
+  ```
+  ollama --version
+  ```
+3. Run the Ollama server (usually starts automatically):
+  ```
+  ollama serve
+  ```
+4. Pull the `llama3` model:
+  ```
+  ollama pull llama3
+  ```
+5. Now you can query Ollama from FastAPI at:
+  ```
+  http://localhost:11434/api/generate
+  
+  ```
+  ℹ️ You can test it manually using curl:
+  ```bash
+  curl http://localhost:11434/api/generate -d '{
+    "model": "llama3",
+    "prompt": "Why is the sky blue?"
+  }'
+  
+  ```
+
 ## 🚀 Getting Started
 
 ### ▶️ Run Locally
