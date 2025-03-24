@@ -15,8 +15,6 @@ This is a basic FastAPI application configured to run both locally and inside a 
 
 ## 🏗️ Project Structure
 
-## 🏗️ Project Structure
-
 ```text
 fast-api/
 ├── app/
