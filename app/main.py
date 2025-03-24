@@ -20,6 +20,7 @@ def read_root():
         "message": "Vamooo Ñubeeeeeeee"
     }
 
+# Ask Ollama API for a response
 @app.get("/ask")
 def ask_ollama():
     url = "http://localhost:11434/api/generate"
@@ -28,8 +29,10 @@ def ask_ollama():
         "prompt": "Why is the sky blue?"
     }
 
+    # Send the request to the Ollama API
     response = requests.post(url, json=payload, stream=True)
 
+    # Process the response and return the result
     output = ""
     for line in response.iter_lines():
         if line:
