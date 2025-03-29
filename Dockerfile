@@ -11,6 +11,8 @@ COPY . .
 # Load default values for environment variables (optional)
 ENV APP_HOST=0.0.0.0
 ENV APP_PORT=8000
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Use sh -c to expand variables
 CMD ["sh", "-c", "uvicorn app.main:app --host $APP_HOST --port $APP_PORT --reload"]

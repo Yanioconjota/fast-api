@@ -5,11 +5,22 @@ import requests
 from fastapi import FastAPI
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Load environment variables from the .env file
 load_dotenv()
 
 app = FastAPI(title=os.getenv("APP_NAME", "Default App"))
+ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # o ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -24,7 +35,7 @@ def read_root():
 # Ask Ollama API for a response
 @app.get("/joker", summary="Get a joke from the Joker API")
 def ask_ollama():
-    url = "http://localhost:11434/api/generate"
+    url = ollama_host + "/api/generate"
     payload = {
         "model": "llama3",
         "prompt": "Please tell me a joke"
@@ -52,7 +63,7 @@ class PromptRequest(BaseModel):
 
 @app.post("/ask", summary="Ask with custom prompt", description="Send a prompt to the local Ollama server using llama3.")
 def ask_ollama_dynamic(request: PromptRequest):
-    url = "http://localhost:11434/api/generate"
+    url = ollama_host + "/api/generate"
     payload = {
         "model": "llama3",
         "prompt": request.prompt
