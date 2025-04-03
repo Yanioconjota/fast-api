@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from utils.forward import forward_to_storage
 import httpx
+import traceback
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -18,7 +19,7 @@ ollama_url = f"{ollama_host}/api/generate"
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # o ["*"] for testing
+    allow_origins=["http://localhost:5173", "http://frontend:5173"],  # o ["*"] for testing
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -69,8 +70,8 @@ async def ask_ollama_dynamic(request: PromptRequest):
     }
 
     try:
-        async with httpx.AsyncClient() as client:
-            response = await client.post(ollama_url, json=payload)
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            response = await client.post(ollama_url, json=payload, timeout=60.0)
             response.raise_for_status()
             data = response.json()
             result = data.get("response", "")
@@ -81,4 +82,5 @@ async def ask_ollama_dynamic(request: PromptRequest):
             return {"response": result}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get response from Ollama: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
